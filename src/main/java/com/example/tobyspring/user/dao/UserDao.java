@@ -2,12 +2,27 @@ package com.example.tobyspring.user.dao;
 
 import com.example.tobyspring.user.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.*;
 
 public class UserDao {
+    //private ConnectionMaker connectionMaker;
+    private DataSource dataSource;
+
+    /*public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }*/
+
+    /*public void setConnectionMaker(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }*/
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "qwqw1212");
+        //Connection c = connectionMaker.makeConnection();
+        Connection c = dataSource.getConnection();
 
         PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?, ?, ?)");
         ps.setString(1, user.getId());
@@ -21,8 +36,8 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "qwqw1212");
+        //Connection c = connectionMaker.makeConnection();
+        Connection c = dataSource.getConnection();
 
         PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
@@ -40,4 +55,18 @@ public class UserDao {
 
         return user;
     }
+
+    public void delete() throws ClassNotFoundException, SQLException {
+        //Connection c = connectionMaker.makeConnection();
+        Connection c = dataSource.getConnection();
+
+        PreparedStatement ps = c.prepareStatement("delete from users");
+
+        ps.executeUpdate();
+
+        ps.close();
+        c.close();
+    }
+
+    //public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 }

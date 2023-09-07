@@ -6,11 +6,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class UserDaoTest {
+class UserDaoDataFactoryTest {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DataFactory.class);
+
         UserDao dao = applicationContext.getBean("userDao", UserDao.class);
 
         User user = new User();
@@ -28,6 +27,10 @@ class UserDaoTest {
         System.out.println(user2.getPassword());
 
         System.out.println(user2.getId() + "조회 성공");
+
+        dao.delete();
+
+        System.out.println("삭제 성공");
     }
 
 }
