@@ -28,7 +28,11 @@ class UserDaoDataFactoryTest {
 
         System.out.println(user2.getId() + "조회 성공");
 
-        dao.delete();
+
+        System.out.println(dao.getCount());
+
+
+        dao.deleteAll();
 
         System.out.println("삭제 성공");
     }

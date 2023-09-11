@@ -13,6 +13,7 @@ public class DataFactory {
         UserDao userDao = new UserDao();
         //userDao.setConnectionMaker(connectionMaker());
         userDao.setDataSource(dataSource());
+        //userDao.setJdbcContext(jdbcContext());
         return userDao;
         //return new UserDao(connectionMaker());
     }
@@ -28,4 +29,11 @@ public class DataFactory {
 
         return dataSource;
     }
+
+//    @Bean
+//    public JdbcContext jdbcContext() {
+//        JdbcContext jdbcContext = new JdbcContext();
+//        jdbcContext.setDataSource(dataSource());
+//        return jdbcContext;
+//    }
 }
